@@ -5,6 +5,11 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     @image = images(:one)
   end
 
+  test 'should get index' do
+    get images_url
+    assert_response :success
+  end
+
   test 'should get new' do
     get new_image_url
     assert_response :success
