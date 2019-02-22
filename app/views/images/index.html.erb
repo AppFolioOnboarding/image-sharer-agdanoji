@@ -1,15 +1,15 @@
-<h1>Listing Image links</h1>
+<h1>Listing Images</h1>
 
 <table>
   <tr>
-    <th>Links</th>
+    <th>Images</th>
     <th></th>
   </tr>
 
   <% @images.each do |image| %>
     <tr>
-      <td><%= image.url %></td>
-      <td><%= link_to 'Show', image_path(image) %></td>
+      <td><%= image_tag image.url , :size => "300x300" %></td>
+      <td><%= link_to 'Show', image_path(image), class: 'img' %></td>
     </tr>
   <% end %>
 </table>
