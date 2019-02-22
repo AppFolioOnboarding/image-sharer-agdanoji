@@ -17,6 +17,11 @@ class ImagesController < ApplicationController
     @image = Image.find(params[:id])
   end
 
+  def index
+    @images = Image.all
+    @image = @images.reverse
+  end
+
   private
 
   def image_params
