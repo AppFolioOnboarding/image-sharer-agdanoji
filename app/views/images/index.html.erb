@@ -2,14 +2,12 @@
 
 <table>
   <tr>
-    <th>Images</th>
     <th></th>
   </tr>
 
   <% @images.each do |image| %>
     <tr>
-      <td><%= image_tag image.url , :size => "300x300" %></td>
-      <td><%= link_to 'Show', image_path(image), class: 'img' %></td>
+      <td><%= link_to (image_tag image.url, class: 'img-panel'), image %><td>
     </tr>
   <% end %>
 </table>

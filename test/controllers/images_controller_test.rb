@@ -3,7 +3,7 @@ require 'test_helper'
 class ImagesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @url0 = 'https://albertonrecord.co.za/wp-content/uploads/sites/35/2018/03/OnlineCartoonsTom_12731-520x390.jpg'
-    @url1 = 'https://img.freepik.com/free-vector/happy-businessman-making-thumbs-up-sign_1325-454.jpg'
+    @url1 = 'https://image.freepik.com/free-vector/sad-businessman-without-money_23-2147619715.jpg'
     @url2 = 'https://image.freepik.com/free-vector/aim-manager-ideas-worker-telephone_1302-4833.jpg'
     @image0 = Image.create(url: @url0)
     @image1 = Image.create(url: @url1)

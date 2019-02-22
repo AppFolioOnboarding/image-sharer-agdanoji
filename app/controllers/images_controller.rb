@@ -19,6 +19,7 @@ class ImagesController < ApplicationController
 
   def index
     @images = Image.all
+    @image = @images.reverse
   end
 
   private
