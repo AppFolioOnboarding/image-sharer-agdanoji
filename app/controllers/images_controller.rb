@@ -5,7 +5,6 @@ class ImagesController < ApplicationController
 
   def create
     @image = Image.new(image_params)
-
     if @image.save
       redirect_to @image
     else
@@ -19,12 +18,12 @@ class ImagesController < ApplicationController
 
   def index
     @images = Image.all
-    @image = @images.reverse
+    @images = @images.reverse
   end
 
   private
 
   def image_params
-    params.require(:image).permit(:url)
+    params.require(:image).permit(:url, :tag_list)
   end
 end
