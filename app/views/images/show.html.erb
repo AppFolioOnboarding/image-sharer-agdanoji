@@ -4,7 +4,9 @@
 <p>
   <strong>Link:</strong>
   <%= @image.url %><br>
-  <%= image_tag @image.url , :size => "500x500" %>
+  <%= image_tag @image.url , class: 'img-panel'%><br>
+  <strong>Tag:</strong>
+  <p class="tag_name"><%= @image.tag_list %></p><br>
 </p>
 
 
