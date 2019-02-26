@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2019_02_23_005651) do
   end
 
   create_table 'taggings', force: :cascade do |t|
-    t.integer 'tag_id'
+    t.integer "tag_id"
     t.string 'taggable_type'
     t.integer "taggable_id"
     t.string "tagger_type"

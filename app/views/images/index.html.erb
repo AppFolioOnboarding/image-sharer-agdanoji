@@ -3,11 +3,13 @@
 <table>
   <tr>
     <th></th>
+    <th></th>
   </tr>
 
   <% @images.each do |image| %>
     <tr>
       <td><%= link_to (image_tag image.url, class: 'img-panel'), image %><td>
+      <td><%= link_to image.tag_list, class: 'tag_name'  %></td>
     </tr>
   <% end %>
 </table>

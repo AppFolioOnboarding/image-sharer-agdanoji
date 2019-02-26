@@ -5,18 +5,26 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     @url0 = 'https://albertonrecord.co.za/wp-content/uploads/sites/35/2018/03/OnlineCartoonsTom_12731-520x390.jpg'
     @url1 = 'https://image.freepik.com/free-vector/sad-businessman-without-money_23-2147619715.jpg'
     @url2 = 'https://image.freepik.com/free-vector/aim-manager-ideas-worker-telephone_1302-4833.jpg'
-    @image0 = Image.create(url: @url0)
-    @image1 = Image.create(url: @url1)
-    @image2 = Image.create(url: @url2)
+    @tag0 = ''
+    @tag1 = 'business man'
+    @tag2 = 'manager, man'
+    @image0 = Image.create(url: @url0, tag_list: @tag0)
+    @image1 = Image.create(url: @url1, tag_list: @tag1)
+    @image2 = Image.create(url: @url2, tag_list: @tag2)
   end
 
   test 'should get index' do
     get images_url
     assert_select 'img', count: 3
     assert_select 'img' do |images|
-      assert_equal(@url0, images[0].attributes['src'].value)
+      assert_equal(@url2, images[0].attributes['src'].value)
       assert_equal(@url1, images[1].attributes['src'].value)
-      assert_equal(@url2, images[2].attributes['src'].value)
+      assert_equal(@url0, images[2].attributes['src'].value)
+    end
+    assert_select 'a[href=?]', '/images?class=tag_name' do |tags|
+      assert_equal(@tag2, tags[0].text)
+      assert_equal(@tag1, tags[1].text)
+      assert_equal(@tag0, tags[2].text)
     end
   end
 
@@ -50,6 +58,9 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show image' do
     get image_url(@image1)
+    assert_select 'p.tag_name' do |tag|
+      assert_equal(@tag1, tag[0].text)
+    end
     assert_response :success
   end
 end
