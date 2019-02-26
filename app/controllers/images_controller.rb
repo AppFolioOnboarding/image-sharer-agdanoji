@@ -17,13 +17,17 @@ class ImagesController < ApplicationController
   end
 
   def index
-    @images = Image.all
+    @images = if params[:search] && params[:search] != ''
+                Image.tagged_with([params[:search]], any: true)
+              else
+                Image.all
+              end
     @images = @images.reverse
   end
 
   private
 
   def image_params
-    params.require(:image).permit(:url, :tag_list)
+    params.require(:image).permit(:url, :tag_list, :search)
   end
 end

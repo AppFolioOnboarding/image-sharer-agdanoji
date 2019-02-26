@@ -1,10 +1,15 @@
 <h1>Listing Images</h1>
 
+<%= form_tag(images_url , method: :get) do %>
+  <%= text_field_tag(:search, params[:search]) %>
+  <%= submit_tag ("Search") %>
+<% end %>
+<br/>
 <table>
   <% @images.each do |image| %>
     <tr>
       <td><%= link_to (image_tag image.url, class: 'img-panel'), image %><td>
-      <td><%= link_to image.tag_list, class: 'tag_name'  %></td>
+      <td><%= link_to image.tag_list, images_url(search: "#{params[:search]}#{image.tag_list}") %></td>
     </tr>
   <% end %>
 </table>
