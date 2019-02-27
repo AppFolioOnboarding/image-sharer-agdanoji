@@ -24,7 +24,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get all images for empty search tag' do
     # empty tag filter should display all images
-    get images_url, params: { search: '' }
+    get images_url, params: { tag: '' }
     assert_select 'img' do |images|
       assert_equal(images.length, Image.count)
     end
@@ -32,17 +32,27 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should give no images for unknown search tag' do
-    get images_url, params: { search: 'hello' }
+    get images_url, params: { tag: 'hello' }
     list = css_select('img')
     assert_equal(list.count, 0)
     assert_response :success
   end
 
   test 'should give valid images for known search tag' do
-    get images_url, params: { search: 'businessman' }
+    get images_url, params: { tag: 'businessman' }
     assert_select 'img' do |images|
       assert_equal(images.length, 1)
     end
+    assert_select 'a.tag_name' do |tags|
+      assert_equal(tags.text, 'businessman')
+    end
+    assert_response :success
+  end
+
+  test 'should give no images for multiple search tag, unknown/known' do
+    get images_url, params: { tag: 'hello, businessman' }
+    list = assert_select('img')
+    assert_equal(list.count, 1)
     assert_response :success
   end
 

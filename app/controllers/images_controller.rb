@@ -17,8 +17,8 @@ class ImagesController < ApplicationController
   end
 
   def index
-    @images = if params[:search] && params[:search] != ''
-                Image.tagged_with([params[:search]], any: true)
+    @images = if params[:tag].present?
+                Image.tagged_with([params[:tag]], any: true)
               else
                 Image.all
               end
@@ -28,6 +28,6 @@ class ImagesController < ApplicationController
   private
 
   def image_params
-    params.require(:image).permit(:url, :tag_list, :search)
+    params.require(:image).permit(:url, :tag_list)
   end
 end
