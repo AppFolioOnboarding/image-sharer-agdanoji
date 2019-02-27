@@ -9,9 +9,11 @@
   <% @images.each do |image| %>
     <tr>
       <td><%= link_to (image_tag image.url, class: 'img-panel'), image %><td>
-      <td><%= link_to image.tag_list,
-                      images_url(search: "#{params[:search]}#{image.tag_list}", class: "#{params[:class]}"),
-                      class: 'tag_name' %></td>
+      <% image.tag_list.each do |tag| %>
+        <td><%= link_to tag,
+                        images_url(search: "#{params[:search]},#{tag}", class: "#{params[:class]}"),
+                        class: 'tag_name' %></td>
+      <% end %>
     </tr>
   <% end %>
 </table>

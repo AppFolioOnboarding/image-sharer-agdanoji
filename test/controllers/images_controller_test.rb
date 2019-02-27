@@ -16,9 +16,9 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
       assert_equal('http://www.toca-ch.com/data/walls/13/21748875.jpg', images[2].attributes['src'].value)
     end
     assert_select 'a.tag_name' do |tags|
-      assert_equal('manager, man', tags[0].text)
-      assert_equal('businessman', tags[1].text)
-      assert_equal('', tags[2].text)
+      assert_equal('manager', tags[0].text)
+      assert_equal('man', tags[1].text)
+      assert_equal('businessman', tags[2].text)
     end
   end
 
