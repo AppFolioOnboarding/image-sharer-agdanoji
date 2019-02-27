@@ -15,11 +15,45 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
       assert_equal('https://i.ytimg.com/vi/I6mAvvG3Hmw/maxresdefault.jpg', images[1].attributes['src'].value)
       assert_equal('http://www.toca-ch.com/data/walls/13/21748875.jpg', images[2].attributes['src'].value)
     end
-    assert_select 'a[href=?]', '/images?class=tag_name' do |tags|
-      assert_equal('manager, man', tags[0].text)
-      assert_equal('businessman', tags[1].text)
-      assert_equal('', tags[2].text)
+    assert_select 'a.tag_name' do |tags|
+      assert_equal('manager', tags[0].text)
+      assert_equal('man', tags[1].text)
+      assert_equal('businessman', tags[2].text)
     end
+  end
+
+  test 'should get all images for empty search tag' do
+    # empty tag filter should display all images
+    get images_url, params: { tag: '' }
+    assert_select 'img' do |images|
+      assert_equal(images.length, Image.count)
+    end
+    assert_response :success
+  end
+
+  test 'should give no images for unknown search tag' do
+    get images_url, params: { tag: 'hello' }
+    list = css_select('img')
+    assert_equal(list.count, 0)
+    assert_response :success
+  end
+
+  test 'should give valid images for known search tag' do
+    get images_url, params: { tag: 'businessman' }
+    assert_select 'img' do |images|
+      assert_equal(images.length, 1)
+    end
+    assert_select 'a.tag_name' do |tags|
+      assert_equal(tags.text, 'businessman')
+    end
+    assert_response :success
+  end
+
+  test 'should give no images for multiple search tag, unknown/known' do
+    get images_url, params: { tag: 'hello, businessman' }
+    list = assert_select('img')
+    assert_equal(list.count, 1)
+    assert_response :success
   end
 
   test 'should get new' do

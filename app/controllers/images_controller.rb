@@ -17,7 +17,11 @@ class ImagesController < ApplicationController
   end
 
   def index
-    @images = Image.all
+    @images = if params[:tag].present?
+                Image.tagged_with([params[:tag]], any: true)
+              else
+                Image.all
+              end
     @images = @images.reverse
   end
 
